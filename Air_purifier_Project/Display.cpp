@@ -1,8 +1,17 @@
+/*
+ * Author: Md. Masrur Saqib, CSE-18, RUET
+ * Organization: Gizan-Tech
+ * Date of creation: 05-Nov-20
+ * Project Name: Low Cost Air Purifier
+ * Last Modification: 13-Dec-20
+ * Modified by: Md. Masrur Saqib
+ */
+
 #include"Display.h"
 #include<Wire.h>
 #include<LiquidCrystal_I2C.h>
 
-LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
+LiquidCrystal_I2C lcd(0x3F, 20, 4);
 
 Display :: Display()
 {
@@ -11,7 +20,7 @@ Display :: Display()
 
 void Display :: begin()
 {
-  lcd.begin(20, 4);
+  lcd.begin();
   lcd.setCursor(0, 0);
   lcd.print("Low cost AirPurifier");
   lcd.setCursor(0, 1);
@@ -20,13 +29,6 @@ void Display :: begin()
   lcd.print("  Md. Masrur Saqib  ");
   lcd.setCursor(0, 3);
   lcd.print("       Gizan        ");
-  delay(5000);
-  lcd.setCursor(0, 1);
-  lcd.print("     guided by      ");
-  lcd.setCursor(0, 2);
-  lcd.print(" Prof. Dr. Mir Md.  ");
-  lcd.setCursor(0, 3);
-  lcd.print(" Jahangir Kabir Sir ");
   delay(5000);
 }
 
@@ -77,37 +79,12 @@ void Display :: show(int x, int y, int num)
 void Display :: legend()
 {
   lcd.setCursor(0, 0);
-  lcd.print("DustLvL         ug/L");
+  lcd.print("DustLvL        ug/m3");
   lcd.setCursor(0, 1);
   lcd.print("Humidity        %   ");
   lcd.setCursor(0, 2);
   lcd.print("Temper          C   ");
   lcd.setCursor(0, 3);
   lcd.print("AirQuality          ");
-  delay(500);
-}
-
-void Display :: legendVal(float dust, float hum, float temp, String quality)
-{
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("DustLvL ");
-  lcd.print(dust);
-  lcd.print(" ug/L  ");
-  delay(500);
-  lcd.setCursor(0, 1);
-  lcd.print("Humidity ");
-  lcd.print(hum);
-  lcd.print(" %   ");
-  delay(500);
-  lcd.setCursor(0, 2);
-  lcd.print("Temperature ");
-  lcd.print(temp);
-  lcd.print(" C   ");
-  delay(500);
-  lcd.setCursor(0, 3);
-  lcd.print("AirQuality ");
-  lcd.print(quality);
-  lcd.print("  ");
   delay(500);
 }

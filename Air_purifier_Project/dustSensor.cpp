@@ -1,3 +1,12 @@
+/*
+ * Author: Md. Masrur Saqib, CSE-18, RUET
+ * Organization: Gizan-Tech
+ * Date of creation: 05-Nov-20
+ * Project Name: Low Cost Air Purifier
+ * Last Modification: 13-Dec-20
+ * Modified by: Md. Masrur Saqib
+ */
+
 #include<Arduino.h>
 #include "dustSensor.h"
 #define N 100

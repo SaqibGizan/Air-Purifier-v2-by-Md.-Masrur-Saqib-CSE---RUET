@@ -1,3 +1,12 @@
+/*
+ * Author: Md. Masrur Saqib, CSE-18, RUET
+ * Organization: Gizan-Tech
+ * Date of creation: 05-Nov-20
+ * Project Name: Low Cost Air Purifier
+ * Last Modification: 13-Dec-20
+ * Modified by: Md. Masrur Saqib
+ */
+
 #include <SoftwareSerial.h>
 #include <DHT.h>
 #include "Controll.h"
@@ -13,23 +22,23 @@
 #define BluRx_pin 3
 #define BluTx_pin 2
 #define Dht_pin 1
-#define DHTTYPE DHT22
+#define DHTTYPE DHT11
 #define DustLed_pin 4
 #define DustOut_pin A7
 #define HV 12
 #define LV 3
 #define Auto 1 
 #define Manual 2
-#define dustID 1
-#define humID 2
-#define tempID 3
+#define dustID "D"
+#define humID "H"
+#define tempID "T"
 
 
 dustSensor dust(DustLed_pin, DustOut_pin);
 Controll fan1(Fan1_pin, HV);
 Controll fan2(Fan2_pin, HV);
-Controll fan3(Fan3_pin, LV);
-Controll fan4(Fan4_pin, LV);
+Controll fan3(Fan3_pin, HV);
+Controll fan4(Fan4_pin, HV);
 Controll led(Backlit_pin);
 DHT dht(Dht_pin, DHTTYPE);
 Display dis;
@@ -41,6 +50,7 @@ String quality;
 float dst;
 float hum;
 float temp;
+int count = 0;
 
 void setup()
 {
@@ -55,7 +65,6 @@ void setup()
   dis.begin();
   blu.begin(115200);
   dis.legend();
-  Serial.begin(115200);
 }
 
 void loop()
@@ -71,14 +80,12 @@ void loop()
   dataSend(dustID, dst);
   dataSend(humID, hum);
   dataSend(tempID, temp);
-  Serial.println(dst);
   if (blu.available())
   {
     Bluetooth();
   }
   MODE_CONTROL();
 }
-
 
 void All_ON() {
   fan1.on();
@@ -100,9 +107,12 @@ void MODE_CONTROL() {
   if (MODE == 1) {
     if (dust.averageDensity < 5) {
       All_OFF();
+      count = 0;
     }
     else {
-      All_ON();
+      count++;
+      if(count > 4)
+        All_ON();
     }
   }
 }
@@ -171,12 +181,52 @@ void Bluetooth() {
     led.off();
     MODE = 0;
   }
+
+  if (rBlu == 'G') {
+    fan3.highSpd();
+    MODE = 0;
+  }
+  if (rBlu == 'H') {
+    fan3.midSpd();
+    MODE = 0;
+  }
+  if (rBlu == 'J') {
+    fan3.lowSpd();
+    MODE = 0;
+  }
+  if (rBlu == 'K') {
+    fan4.highSpd();
+    MODE = 0;
+  }
+  if (rBlu == 'L') {
+    fan4.midSpd();
+    MODE = 0;
+  }
+  if (rBlu == 'Z') {
+    fan4.lowSpd();
+    MODE = 0;
+  }
+  if (rBlu == 'X') {
+    fan3.on();
+    MODE = 0;
+  }
+  if (rBlu == 'C') {
+    fan3.off();
+    MODE = 0;
+  }
+  if (rBlu == 'V') {
+    fan4.on();
+    MODE = 0;
+  }
+  if (rBlu == 'B') {
+    fan4.off();
+    MODE = 0;
+  }
 }
 
-void dataSend(int id, float num)
+void dataSend(String id, float num)
 {
-  blu.print("2");
-  blu.print(id);
-  blu.print(num);
-  blu.println("3");
+  String text = id + " " + (String)num + " ";
+  blu.print(text);
+  delay(50);
 }

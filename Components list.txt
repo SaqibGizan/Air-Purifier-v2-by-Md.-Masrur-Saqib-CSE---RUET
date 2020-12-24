@@ -1,0 +1,23 @@
+Components
+1. Cooling Fans * 4
+2. 20 * 4 LCD Display
+3. LCD Display Parallel to I2C converter
+4. Sharp GP2Y1014AU0F Dust Sensor :: Measures PM2.5
+5. DHT-11 Humidity & Temperature Sensor
+6. HC-05 :: Communication with Android
+7. Barrel connectors * 1
+8. Block connectors * 4
+9. BD-135 Transistor * 4
+10. Capacitors 1000 uF * 1
+11. Capacitors 47 uF * 1
+12. Capacitors 220 uF * 1
+13. Capacitor 1nF * 1
+14. Resistors 4.7K * 2
+15. Resistors 2K * 5
+16. Resistors 150 ohm * 1
+17. Resistors 1K * 1
+18. Diode 1N4007 * 1
+19. Zenar Diode 1N4733A * 2
+20. Male and Female Rail * 5
+21. DC-DC Step down Buck converter * 1
+22. Arduino Nano 
